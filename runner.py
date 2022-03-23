@@ -3,6 +3,7 @@ import json
 
 
 def save_data():
+    message = message_entry.get("1.0", "end-1c")
     orcs = orcs_entry.get("1.0", "end-1c")
     orc_list = orcs.split("\n")
 
@@ -10,7 +11,7 @@ def save_data():
         "api_id": api_id.get(),
         "api_hash": api_hash.get(),
         "orcs": orc_list,
-        "message": message.get(),
+        "message": message,
 
     }
 
@@ -26,8 +27,18 @@ def save_data():
 root = Tk()
 root.title("Report the orcs")
 
-api_id = StringVar()
-api_hash = StringVar()
+try:
+    f = open('api_config.json')
+    data = json.load(f)
+    default_api_id = data['api_id']
+    default_api_hash = data['api_hash']
+except:
+    default_api_id = ""
+    default_api_hash = ""
+
+
+api_id = StringVar(value=default_api_id)
+api_hash = StringVar(value=default_api_hash)
 orcs = StringVar()
 message = StringVar()
 
@@ -42,10 +53,10 @@ api_hash_label.grid(row=1, column=0, sticky="w")
 orcs_label.grid(row=2, column=0, sticky="w")
 message_label.grid(row=3, column=0, sticky="w")
 
-api_id_entry = Entry(textvariable=api_id)
-api_hash_entry = Entry(textvariable=api_hash)
-orcs_entry = Text(root, height=5, width=52)
-message_entry = Text(root, height=5, width=52)
+api_id_entry = Entry(textvariable=api_id, width=33)
+api_hash_entry = Entry(textvariable=api_hash, width=33)
+orcs_entry = Text(root, height=5, width=33)
+message_entry = Text(root, height=5, width=33)
 
 api_id_entry.grid(row=0, column=1, padx=5, pady=5)
 api_hash_entry.grid(row=1, column=1, padx=5, pady=5)

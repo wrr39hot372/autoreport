@@ -20,7 +20,12 @@ client = TelegramClient('anon', api_id, api_hash)
 client.start()
 
 for channel in dicks:
-    response = client(ReportPeerRequest(peer=channel, reason=InputReportReasonViolence(), message=message))
-    print(response)
+    try:
+        response = client(ReportPeerRequest(peer=channel, reason=InputReportReasonViolence(), message=message))
+        print(f"{channel} reported successfully")
+
+    except:
+        print(f"{channel} report failed")
+        continue
     sleeptime = random.randint(8, 20)
     time.sleep(sleeptime)
